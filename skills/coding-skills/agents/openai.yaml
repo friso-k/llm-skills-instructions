@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coding Skills"
+  short_description: "Coding workflows with Vue i18n translation guidance."
+  default_prompt: "Use coding-skills to translate this Vue page to our local i18n block pattern and preserve behavior."

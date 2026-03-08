@@ -1,9 +1,9 @@
 ---
-name: vue-sfc-i18n-translation
-description: Translate Vue Single File Component pages to vue-i18n by replacing hardcoded UI strings with t(...) keys while preserving behavior. Use in any Vue project when internationalization is missing or partial, whether translations live in SFC i18n blocks or central locale files.
+name: coding-skills
+description: Coding skill set focused on Vue Single File Component i18n translation by replacing hardcoded UI strings with t(...) keys while preserving behavior.
 ---
 
-# Vue SFC i18n Translation
+# Coding Skills
 
 Translate one Vue page at a time and keep behavior unchanged.
 

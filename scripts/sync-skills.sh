@@ -10,8 +10,15 @@ OPENCODE_DEST="${HOME}/.config/opencode/skills"
 
 mkdir -p "${CODEX_DEST}" "${OPENCODE_DEST}"
 
-cp -R "${SRC_DIR}/." "${CODEX_DEST}/"
-cp -R "${SRC_DIR}/." "${OPENCODE_DEST}/"
+# Only copy first-level folders under ./skills.
+for skill_dir in "${SRC_DIR}"/*; do
+  [[ -d "${skill_dir}" ]] || continue
+  skill_name="$(basename "${skill_dir}")"
+
+  rm -rf "${CODEX_DEST:?}/${skill_name}" "${OPENCODE_DEST:?}/${skill_name}"
+  cp -R "${skill_dir}" "${CODEX_DEST}/${skill_name}"
+  cp -R "${skill_dir}" "${OPENCODE_DEST}/${skill_name}"
+done
 
 echo "Copied skills to:"
 echo "- ${CODEX_DEST}"
