@@ -39,7 +39,7 @@ Do not use this skill as the primary guide for small component edits, pure dedup
 ### Use a Page-Local Component When
 - the block is only used by one page or route area
 - it has meaningful complexity or repeated markup within that page
-- group page-local components in a dedicated page-owned subfolder so related files stay together
+- group page-local components in a single dedicated page-owned subfolder so related files stay together
 
 ### Use a Shared Component When
 - the block is reused across multiple pages/features
@@ -60,7 +60,7 @@ Do not use this skill as the primary guide for small component edits, pure dedup
 - Follow the repo's existing structure first.
 - If no pattern exists, reasonable defaults are:
 - shared components in a common components area
-- page-only components in a dedicated subfolder owned by the page, for example `pages/checkout/components/` or `pages/checkout/_components/`
+- page-only components directly in a dedicated subfolder owned by the page, for example `pages/checkout-page/`, not an extra nested `components/` folder
 - layouts in the app's existing layout mechanism
 
 ## Verification
