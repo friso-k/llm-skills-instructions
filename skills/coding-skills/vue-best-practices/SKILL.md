@@ -66,6 +66,7 @@ Do not use this skill as the primary guide when the task is mainly:
 - If no convention is visible, use:
 - PascalCase for components
 - `useSomething.ts` for composables
+- group page-specific components in a page-owned subfolder rather than scattering them beside unrelated files
 - Keep block order consistent with the repo. If there is no local convention, prefer `template`, `script`, `style` for Vue SFCs.
 
 ## Output

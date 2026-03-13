@@ -30,6 +30,7 @@ Do not use this skill as the primary guide when the task is mostly new feature i
 ### Large or Mixed-Responsibility Components
 - Split components when size is causing multiple responsibilities, poor readability, or hard testing.
 - Do not split solely because a file crosses an arbitrary line threshold.
+- When extracting page-specific pieces, group them in a dedicated subfolder owned by that page.
 
 ### Duplicate Logic
 - Extract repeated stateful logic into a composable when that improves reuse and naming clarity.
