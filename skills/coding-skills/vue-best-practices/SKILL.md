@@ -1,131 +1,75 @@
-# Vue Best Practices Skill
-
-## Purpose
-
-Ensure all generated Vue code follows modern best practices.
-
-Applies when:
-
-- generating Vue components
-- modifying components
-- writing new logic
-
+---
+name: vue-best-practices
+description: Apply modern Vue implementation practices when creating or editing Vue components and composables. Use for code generation and routine component work, not for broad architecture refactors, deduplication passes, or i18n-only tasks.
 ---
 
-# Composition API Only
+# Vue Best Practices
 
-Always use:
+Use this skill for normal Vue implementation work: new components, component edits, composables, and routine cleanup.
 
-<script lang="ts" setup>
+Do not use this skill as the primary guide when the task is mainly:
+- reorganizing page/component boundaries
+- deduplicating existing components across the app
+- translating UI strings to vue-i18n
 
-Never use Options API.
+## Workflow
+1. Inspect the local conventions before editing:
+- Composition API vs Options API
+- TypeScript usage
+- folder and naming patterns
+- UI library, state, and form patterns already in use
+2. Match the project conventions unless there is a clear reason to improve them.
+3. Apply the implementation rules below while preserving behavior and public APIs.
+4. Run the smallest useful verification for the change:
+- existing tests for touched code
+- lint or typecheck if available
+- targeted build check when needed
 
-Bad:
+## Implementation Rules
 
-export default { data() {} }
+### Follow Existing Project Style First
+- Prefer the dominant style already used in the touched area.
+- For new Vue 3 code, default to `<script setup lang="ts">` unless the project or file clearly uses another pattern.
+- Do not rewrite stable Options API components just to satisfy style preferences unless the user asks for migration.
 
----
+### Keep Components Focused
+- Prefer components that have one clear responsibility.
+- If a file is hard to scan or mixes orchestration, rendering, and business rules, split it.
+- Use line-count thresholds as signals, not hard rules.
 
-# Props and Emits
+### Prefer Derived State Over Synchronization
+- Use `computed` for values derived from other reactive state.
+- Use `watch` only for side effects, async reactions, or imperative integration points.
+- Avoid watchers that merely keep duplicated state in sync.
 
-Use defineProps and defineEmits.
+### Keep Templates Readable
+- Move heavy conditions, filtering, formatting, and mapping out of the template when that improves readability.
+- Small inline expressions are fine; do not extract trivial logic just to satisfy a rule.
 
-Example:
+### Props, Emits, and Slots
+- Use explicit props and emits interfaces.
+- Prefer props for simple data and configuration.
+- Prefer slots when the caller must control markup or pass nested components.
+- Do not replace a clear prop API with slots unless flexibility is actually needed.
 
-const props = defineProps<{
-  title: string
-}>()
+### Reuse Logic Carefully
+- Extract a composable when logic is reused or when a component becomes easier to understand by separating stateful behavior.
+- Place composables where the repo expects them. If there is no established pattern, `src/composables/` is a reasonable default.
 
-const emit = defineEmits<{
-  (e: "click"): void
-}>()
+### Avoid Unnecessary Prop Drilling
+- First check whether passing props is still the clearest option.
+- Consider slots, a composable, or shared state only when prop chains become awkward.
+- Use `provide/inject` for tightly related component trees, not as a default replacement for normal props.
 
----
+### Naming and File Structure
+- Match the repo's naming conventions for components, composables, and directories.
+- If no convention is visible, use:
+- PascalCase for components
+- `useSomething.ts` for composables
+- Keep block order consistent with the repo. If there is no local convention, prefer `template`, `script`, `style` for Vue SFCs.
 
-# Keep Components Small
-
-Rule:
-
-<150 lines preferred
-
-If larger → split component. Split the logic in presentation and behaviour if the component is to large
-and group the component and the logic in the same seperate folder.
-
----
-
-# Prefer Computed Over Watch
-
-Bad:
-
-watch(foo, () => {
-  bar.value = foo.value * 2
-})
-
-Good:
-
-const bar = computed(() => foo.value * 2)
-
----
-
-# Avoid Prop Drilling
-
-Prefer:
-
-provide/inject
-composables
-
----
-
-# Extract Composables
-
-Shared logic must move to:
-
-src/composables/
-
-Example:
-
-useUser.ts
-usePagination.ts
-
----
-
-# Prefer Slots Over Prop-Based Layout
-
-Bad:
-
-<Card title="hello" content="text" />
-
-Good:
-
-<Card>
-  <h2>Hello</h2>
-</Card>
-
----
-
-# Avoid Complex Template Logic
-
-Bad:
-
-v-if="items.filter(x => x.active).length > 3"
-
-Good:
-
-const hasActiveItems = computed(() => ...)
-
----
-
-# Naming
-
-Components → PascalCase
-Composables → useSomething.ts
-
----
-
-# File Structure
-
-Component file order:
-
-1. script
-2. template
-3. style
+## Output
+Report:
+- conventions followed or inferred
+- notable best-practice improvements applied
+- verification performed

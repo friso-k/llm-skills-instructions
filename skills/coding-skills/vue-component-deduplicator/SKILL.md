@@ -1,96 +1,71 @@
-# Vue Component Deduplicator Skill
-
-## Purpose
-
-Prevent component duplication across the codebase.
-
-This skill detects when new components are unnecessary because a similar one already exists.
-
+---
+name: vue-component-deduplicator
+description: Detect and reduce unnecessary Vue component duplication before creating new components or when consolidating overlapping components. Use when the task is specifically about reuse, consolidation, or duplicate UI patterns.
 ---
 
-# Component Similarity Detection
+# Vue Component Deduplicator
 
-Before creating a component:
+Use this skill when deciding whether to reuse an existing component, extend one, or merge overlapping components.
 
-Search:
+Do not use this skill as the primary guide for routine component edits or page architecture work unless duplication is the main concern.
 
-src/components
-src/components/ui
-src/components/sections
+## Workflow
+1. Search for relevant components in the repo's actual component locations.
+2. Compare candidate components by:
+- purpose and user-facing role
+- public API: props, emits, slots
+- visual structure and states
+- accessibility semantics
+- styling/theming constraints
+- usage breadth across the app
+3. Decide whether the right action is:
+- reuse as-is
+- extend an existing component
+- extract a shared primitive
+- keep separate components
+4. If consolidating, migrate callers carefully and verify behavior.
 
-Compare:
+## Search Guidance
+- Start with the project's established component folders.
+- Common locations include `src/components`, feature folders, route-level component folders, and UI-library wrappers.
+- Do not assume every project uses `ui`, `layout`, or `sections` directories.
 
-- name
-- structure
-- props
-- slots
-- purpose
+## Duplication Decision Rules
 
----
+### Reuse an Existing Component When
+- purpose is the same
+- required states and interactions already exist
+- differences are cosmetic or small configuration changes
 
-# Similarity Rules
+### Extend an Existing Component When
+- one component already covers most behavior
+- the new requirement can be added without making the API confusing
+- slots or a small prop addition would keep the abstraction clear
 
-Two components are considered duplicates if:
+### Extract a Shared Primitive When
+- two or more components share structure but serve different product concepts
+- a lower-level part can be reused without forcing unrelated screens onto one abstraction
 
-- markup structure is similar
-- props overlap significantly
-- purpose is identical
+### Keep Separate Components When
+- semantics differ meaningfully
+- accessibility roles or interactions differ
+- styling and layout constraints are domain-specific
+- merging would create a vague "god component"
 
-Example duplicates:
+## Consolidation Rules
+- Do not merge solely because names or markup look similar.
+- Prefer preserving the clearer public API over maximizing reuse.
+- Canonical names should emerge from the local codebase; do not rename broadly without value.
+- If removing duplicates, choose the version with the best API, tests, accessibility, and adoption path.
 
-Hero.vue
-HeroSection.vue
-HeroBanner.vue
+## Verification
+- Re-check all migrated usages.
+- Run targeted tests, lint, or typecheck where available.
+- Confirm no caller lost behavior, states, or accessible labeling.
 
-These should be merged.
-
----
-
-# Merge Strategy
-
-If duplicate detected:
-
-1. reuse existing component
-2. extend props if necessary
-3. add slots if flexibility required
-
-Do not create new component.
-
----
-
-# Naming Normalization
-
-Prefer canonical names:
-
-AppHeader
-HeroSection
-FeatureGrid
-StatsCard
-
-Avoid variants.
-
----
-
-# Component Registry
-
-Maintain mental registry of major components.
-
-Examples:
-
-AppHeader
-Card
-Button
-HeroSection
-FeatureGrid
-
-Reuse these before creating new ones.
-
----
-
-# Refactor Duplicates
-
-If duplicates already exist:
-
-choose best version
-migrate usages
-delete others
+## Output
+Report:
+- components inspected
+- reuse/extend/extract/keep-separate decision
+- migrations performed
+- verification performed

@@ -1,4 +1,4 @@
 interface:
   display_name: "Vue SFC i18n Translation"
-  short_description: "Translate Vue pages to local i18n t() patterns."
-  default_prompt: "Translate this Vue page to our local i18n block pattern and preserve behavior."
+  short_description: "Translate Vue UI strings to vue-i18n."
+  default_prompt: "Use $vue-sfc-i18n-translation to replace hardcoded Vue UI strings with vue-i18n keys while preserving behavior."

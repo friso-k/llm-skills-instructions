@@ -1,95 +1,65 @@
-# Vue Refactor Skill
-
-## Purpose
-
-Improve maintainability of existing Vue code.
-
-Triggers when:
-
-- editing components
-- adding features
-- reviewing code
-
+---
+name: vue-refactor
+description: Refactor existing Vue code for maintainability while preserving behavior and public APIs. Use when improving structure, readability, or reuse in existing Vue components, composables, and related files.
 ---
 
-# Refactor Rules
+# Vue Refactor
 
-## Large Components
+Use this skill for maintainability-focused changes to existing Vue code.
 
-If component >200 lines:
+Do not use this skill as the primary guide when the task is mostly new feature implementation, page architecture design, or translation to vue-i18n.
 
-→ split into smaller components
+## Workflow
+1. Understand the current behavior before editing:
+- component responsibilities
+- public props/emits/slots
+- shared dependencies
+- existing tests and usage sites
+2. Identify the specific refactor target:
+- oversized component
+- duplicated logic
+- duplicated UI
+- confusing state flow
+- dead code or naming problems
+3. Apply the smallest refactor that meaningfully improves clarity.
+4. Preserve behavior and public APIs unless the user asked for breaking cleanup.
+5. Verify the touched flows with the smallest reliable checks available.
 
----
+## Refactor Rules
 
-## Duplicate Logic
+### Large or Mixed-Responsibility Components
+- Split components when size is causing multiple responsibilities, poor readability, or hard testing.
+- Do not split solely because a file crosses an arbitrary line threshold.
 
-If identical logic appears in multiple components:
+### Duplicate Logic
+- Extract repeated stateful logic into a composable when that improves reuse and naming clarity.
+- Keep feature-specific logic local if extraction would create weak abstractions.
 
-→ extract composable
+### Duplicate UI
+- Extract repeated UI when the shared structure and semantics are genuinely the same.
+- If only a sub-part is shared, extract that sub-part instead of forcing a large common component.
 
-Example:
+### State Simplification
+- Prefer derived state over mirrored state.
+- Remove unnecessary watchers or intermediate refs that only restate other values.
+- Keep imperative watchers when they drive side effects or external integrations.
 
-src/composables/usePagination.ts
+### API and Readability Cleanup
+- Clarify prop names, local variable names, and helper naming when current names hide intent.
+- Replace awkward prop shapes with clearer interfaces only when the migration cost is justified.
+- Use slots when they make the component more composable, not by default.
 
----
+### Dead Code Removal
+- Remove unused imports, props, variables, branches, and obsolete helpers once confirmed safe.
+- Check templates and indirect usage before deleting exports or props.
 
-## Duplicate UI
+## Verification
+- Prefer targeted tests for affected behavior.
+- Run lint, typecheck, or build checks when available and proportionate.
+- Revisit caller sites after API-adjacent refactors.
 
-If identical markup appears multiple times:
-
-→ extract component
-
----
-
-## Improve Prop Interfaces
-
-Replace complex props with slots when appropriate.
-
----
-
-## Simplify State
-
-Prefer:
-
-computed
-derived state
-
-Avoid unnecessary watchers.
-
----
-
-## Remove Dead Code
-
-Remove:
-
-unused props
-unused imports
-unused variables
-
----
-
-# Improve Readability
-
-Rename unclear variables.
-
-Bad:
-
-data
-
-Good:
-
-userProfile
-
----
-
-# Extract Reusable Components
-
-Look for patterns:
-
-cards
-lists
-headers
-forms
-
-Extract reusable components where possible.
+## Output
+Report:
+- refactor targets addressed
+- behavior/API preservation assumptions
+- verification performed
