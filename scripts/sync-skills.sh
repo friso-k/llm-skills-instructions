@@ -31,9 +31,16 @@ rm -rf ~/.qwen/skills/*
 
 echo "Copying skills..."
 
-cp -r ./skills/* ~/.codex/skills/
-cp -r ./skills/* ~/.config/opencode/skills/
-cp -r ./skills/* ~/.gemini/skills/
-cp -r ./skills/* ~/.qwen/skills/
+# Coding Skills
+cp -r ./skills/coding/* ~/.codex/skills/
+cp -r ./skills/coding/* ~/.config/opencode/skills/
+cp -r ./skills/coding/* ~/.gemini/skills/
+cp -r ./skills/coding/* ~/.qwen/skills/
+
+# Marketing Skills
+#cp -r ./skills/marketing/* ~/.codex/skills/
+#cp -r ./skills/marketing/* ~/.config/opencode/skills/
+#cp -r ./skills/marketing/* ~/.gemini/skills/
+#cp -r ./skills/marketing/* ~/.qwen/skills/
 
 echo "Done."
