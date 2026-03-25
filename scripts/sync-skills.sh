@@ -23,11 +23,13 @@ mkdir -p ~/.codex/skills
 mkdir -p ~/.config/opencode/skills
 mkdir -p ~/.gemini/skills
 mkdir -p ~/.qwen/skills
+mkdir -p ~/.claude/skills
 
 rm -rf ~/.codex/skills/*
 rm -rf ~/.config/opencode/skills/*
 rm -rf ~/.gemini/skills/*
 rm -rf ~/.qwen/skills/*
+rm -rf ~/.claude/skills/*
 
 echo "Copying skills..."
 
@@ -36,6 +38,7 @@ cp -r ./skills/coding/* ~/.codex/skills/
 cp -r ./skills/coding/* ~/.config/opencode/skills/
 cp -r ./skills/coding/* ~/.gemini/skills/
 cp -r ./skills/coding/* ~/.qwen/skills/
+cp -r ./skills/coding/* ~/.claude/skills/
 
 # Marketing Skills
 #cp -r ./skills/marketing/* ~/.codex/skills/
